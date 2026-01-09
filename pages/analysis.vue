@@ -1,7 +1,7 @@
 
 <script lang="ts" setup>
 const categories: Record<string, BulletLegendItemInterface> = {
-  revenue: { name: 'Stimulation', color: '#87A0E4' },
+  revenue: { name: 'Prikkelniveau', color: '#87A0E4' },
 }
 
 interface AreaChartItem {
@@ -12,9 +12,9 @@ interface AreaChartItem {
 const AreaChartData: AreaChartItem[] = [
   { date: 'Jan', revenue: 5 },
   { date: 'Feb', revenue: 2 },
-  { date: 'Mar', revenue: 2 },
+  { date: 'Maa', revenue: 2 },
   { date: 'Apr', revenue: 3 },
-  { date: 'May', revenue: 2 },
+  { date: 'Mei', revenue: 2 },
   { date: 'Jun', revenue: 1 },
   { date: 'Jul', revenue: 2 },
   { date: 'Aug', revenue: 3 },
@@ -56,11 +56,11 @@ const xFormatter = (tick: number, _i?: number, _ticks?: number[]): string => {
           style="grid-column: span 2; width: 100%;"
           :data="AreaChartData"
           :height="250"
-          y-label="Level"
-          x-label="Month"
+          y-label="Niveau"
+          x-label="Maand"
           :categories="categories"
           :y-num-ticks="4"
-          :x-num-ticks="7"
+          :x-num-ticks="8"
           :y-grid-line="true"
           :legend-position="LegendPosition.TopRight"
           :hide-legend="false"
