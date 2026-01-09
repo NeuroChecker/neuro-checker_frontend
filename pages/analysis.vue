@@ -19,7 +19,7 @@ const AreaChartData: AreaChartItem[] = [
   { date: 'Jul', revenue: 2 },
   { date: 'Aug', revenue: 3 },
   { date: 'Sep', revenue: 3 },
-  { date: 'Oct', revenue: 4 },
+  { date: 'Okt', revenue: 4 },
   { date: 'Nov', revenue: 4 },
   { date: 'Dec', revenue: 5 },
 ]
