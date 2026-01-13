@@ -25,17 +25,18 @@ export const useAuthStore = defineStore('authStore', {
                 return false;
             }
         },
-        async fetchUser(): Promise<user | undefined> {
+        async fetchUser(cookieValue?: string): Promise<user | undefined> {
             if (this.user) return this.user;
 
-            await this.updateLoginStatus();
+            await this.updateLoginStatus(cookieValue);
             return this.user;
         },
-        async updateLoginStatus(): Promise<boolean> {
+        async updateLoginStatus(cookieValue?: string): Promise<boolean> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/me', {
                     method: 'GET',
                     credentials: 'include',
+                    headers: cookieValue ? {'Cookie': `.AspNetCore.Identity.Application=${cookieValue}`} : {}
                 });
 
                 if (response.error.value) {
