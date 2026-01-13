@@ -44,6 +44,37 @@ export const useAuthStore = defineStore('authStore', {
                 };
             }
         },
+        async logout(): Promise<{
+            success: boolean;
+            message: string | undefined;
+        }> {
+            try {
+                const response = await useFetch('http://localhost:5170/api/identity/logout', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Logout failed'
+                };
+
+                this.isLoggedIn = false;
+                this.user = undefined;
+
+                return {
+                    success: true,
+                    message: undefined
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+
+                return {
+                    success: false,
+                    message: 'An unexpected error occurred'
+                };
+            }
+        },
         async register(request: RegisterRequest): Promise<{
             success: boolean;
             message: string | undefined;
