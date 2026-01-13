@@ -9,6 +9,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const user = await authStore.fetchUser(cookie ?? undefined);
 
-    if (!user && to.path !== '/login') return navigateTo('/login');
-    if (user && to.path === '/login') return navigateTo('/');
+    if (!user && (to.path !== '/login' && to.path !== '/register')) return navigateTo('/login');
+    if (user && (to.path === '/login' || to.path === '/register')) return navigateTo('/');
 });
