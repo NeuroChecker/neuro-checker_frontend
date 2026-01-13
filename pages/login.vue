@@ -12,7 +12,7 @@ const handleSubmit = async (e: Event) => {
 
   const response = await authStore.login({
     email: email.value,
-    password: password.value,
+    password: password.value
   });
 
   if (!response.success) {
@@ -42,31 +42,34 @@ const handleSubmit = async (e: Event) => {
       <p v-if="errorMessage" class="text-red-500 mt-2">{{ errorMessage }}</p>
 
       <form @submit="handleSubmit" class="flex flex-col mt-4">
-        <input
-            v-model="email"
-            required
-            type="text"
-            placeholder="e-mail"
-            class="mt-4 p-2 border border-gray-400 rounded"
-        />
-        <input
-            v-model="password"
-            required
-            type="password"
-            placeholder="wachtwoord"
-            class="mt-2 p-2 border border-gray-400 rounded"
-        />
+
+        <div class="w-full flex flex-col">
+          <input
+              v-model="email"
+              required
+              type="text"
+              placeholder="e-mail"
+              class="mt-4 p-2 border border-gray-400 rounded"
+          />
+          <input
+              v-model="password"
+              required
+              type="password"
+              placeholder="wachtwoord"
+              class="mt-2 p-2 border border-gray-400 rounded"
+          />
+        </div>
 
         <button
             type="submit"
-            class="mt-2 px-4 py-2 bg-[#7aa2ff] text-white rounded hover:bg-[#5a82e6] transition-colors"
+            class="mt-6 px-4 py-2 bg-[#7aa2ff] text-white rounded hover:bg-[#5a82e6] transition-colors"
         >
           Inloggen
         </button>
       </form>
 
       <div>
-        <p class="mt-4 text-gray-600">
+        <p class="mt-2 text-gray-600">
           Geen account?
           <NuxtLink to="/register" class="text-[#7aa2ff]">Registreer hier</NuxtLink>
         </p>
