@@ -1,10 +1,11 @@
-import type {user} from "~/types/models/user";
+import type {User} from "~/types/models/User";
 import type {LoginRequest} from "~/types/requests/LoginRequest";
+import type {RegisterRequest} from "~/types/requests/RegisterRequest";
 
 export const useAuthStore = defineStore('authStore', {
     state: () => ({
         isLoggedIn: ref<boolean>(false),
-        user: ref<user | undefined>(undefined),
+        user: ref<User | undefined>(undefined),
     }),
     actions: {
         async login(request: LoginRequest): Promise<{
@@ -12,7 +13,7 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch<user>('http://localhost:5170/api/identity/login', {
+                const response = await useFetch('http://localhost:5170/api/identity/login', {
                     method: 'POST',
                     body: request,
                     credentials: 'include',
@@ -23,6 +24,7 @@ export const useAuthStore = defineStore('authStore', {
                     message: 'Login failed'
                 };
 
+                // After successful login, we fetch the user data to update the state and validate the session
                 if ((await this.updateLoginStatus()).success) return {
                     success: true,
                     message: undefined
@@ -42,7 +44,38 @@ export const useAuthStore = defineStore('authStore', {
                 };
             }
         },
-        async fetchUser(cookieValue?: string): Promise<user | undefined> {
+        async register(request: RegisterRequest): Promise<{
+            success: boolean;
+            message: string | undefined;
+        }> {
+            try {
+                const response = await useFetch('http://localhost:5170/api/identity/register', {
+                    method: 'POST',
+                    body: request,
+                    credentials: 'include',
+                });
+
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Registration failed'
+                };
+
+                // We don't fetch user data immediately after registration. The user needs to log in first.
+
+                return {
+                    success: true,
+                    message: undefined
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+
+                return {
+                    success: false,
+                    message: 'An unexpected error occurred'
+                };
+            }
+        },
+        async fetchUser(cookieValue?: string): Promise<User | undefined> {
             if (this.user) return this.user;
 
             await this.updateLoginStatus(cookieValue);
@@ -53,7 +86,7 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch<user>('http://localhost:5170/api/identity/me', {
+                const response = await useFetch<User>('http://localhost:5170/api/identity/me', {
                     method: 'GET',
                     credentials: 'include',
                     headers: cookieValue ? {'Cookie': `.AspNetCore.Identity.Application=${cookieValue}`} : {}
@@ -88,5 +121,5 @@ export const useAuthStore = defineStore('authStore', {
                 };
             }
         }
-    },
+    }
 });
