@@ -4,6 +4,7 @@ const authStore = useAuthStore();
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const pronouns = ref('');
 
 const errorMessage = ref('');
 
@@ -49,20 +50,31 @@ const handleSubmit = async (e: Event) => {
       <form @submit="handleSubmit" class="flex flex-col mt-4">
         <input
             v-model="email"
+            required
             type="text"
             placeholder="e-mail"
             class="mt-4 p-2 border border-gray-400 rounded"
         />
         <input
             v-model="password"
+            required
             type="password"
             placeholder="wachtwoord"
             class="mt-2 p-2 border border-gray-400 rounded"
         />
         <input
             v-model="confirmPassword"
+            required
             type="password"
             placeholder="bevestig wachtwoord"
+            class="mt-2 p-2 border border-gray-400 rounded"
+        />
+
+        <input
+            v-model="pronouns"
+            required
+            type="text"
+            placeholder="voornaamwoorden"
             class="mt-2 p-2 border border-gray-400 rounded"
         />
 
