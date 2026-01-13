@@ -12,12 +12,10 @@ export const useUserStore = defineStore('userStore', {
                 const authStore = useAuthStore();
                 const currentUser = await authStore.fetchUser();
 
-                if (!currentUser) {
-                    return {
-                        success: false,
-                        message: 'User not logged in'
-                    };
-                }
+                if (!currentUser) return {
+                    success: false,
+                    message: 'User not logged in'
+                };
 
                 const response = await useFetch('http://localhost:5170/api/personal/thresholds', {
                     method: 'POST',
@@ -25,12 +23,10 @@ export const useUserStore = defineStore('userStore', {
                     credentials: 'include',
                 });
 
-                if (response.error.value) {
-                    return {
-                        success: false,
-                        message: 'Failed to update thresholds'
-                    };
-                }
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Failed to update thresholds'
+                };
 
                 return {
                     success: true,
@@ -54,13 +50,11 @@ export const useUserStore = defineStore('userStore', {
                 const authStore = useAuthStore();
                 const currentUser = await authStore.fetchUser();
 
-                if (!currentUser) {
-                    return {
-                        success: false,
-                        message: 'User not logged in',
-                        acquaintances: undefined
-                    };
-                }
+                if (!currentUser) return {
+                    success: false,
+                    message: 'User not logged in',
+                    acquaintances: undefined
+                };
 
                 const response = await useFetch<Acquaintance[]>('http://localhost:5170/api/personal/acquaintances', {
                     method: 'GET',
@@ -68,13 +62,12 @@ export const useUserStore = defineStore('userStore', {
                     credentials: 'include',
                 });
 
-                if (response.error.value) {
-                    return {
-                        success: false,
-                        message: 'Failed to get acquaintances',
-                        acquaintances: undefined
-                    };
-                }
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Failed to get acquaintances',
+                    acquaintances: undefined
+                };
+
 
                 return {
                     success: true,
@@ -99,12 +92,10 @@ export const useUserStore = defineStore('userStore', {
                 const authStore = useAuthStore();
                 const currentUser = await authStore.fetchUser();
 
-                if (!currentUser) {
-                    return {
-                        success: false,
-                        message: 'User not logged in'
-                    };
-                }
+                if (!currentUser) return {
+                    success: false,
+                    message: 'User not logged in'
+                };
 
                 const response = await useFetch('http://localhost:5170/api/personal/acquaintances', {
                     method: 'PUT',
@@ -112,12 +103,10 @@ export const useUserStore = defineStore('userStore', {
                     credentials: 'include',
                 });
 
-                if (response.error.value) {
-                    return {
-                        success: false,
-                        message: 'Failed to link acquaintance'
-                    };
-                }
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Failed to link acquaintance'
+                };
 
                 return {
                     success: true,
@@ -140,24 +129,20 @@ export const useUserStore = defineStore('userStore', {
                 const authStore = useAuthStore();
                 const currentUser = await authStore.fetchUser();
 
-                if (!currentUser) {
-                    return {
-                        success: false,
-                        message: 'User not logged in'
-                    };
-                }
+                if (!currentUser) return {
+                    success: false,
+                    message: 'User not logged in'
+                };
 
                 const response = await useFetch(`http://localhost:5170/api/personal/acquaintances/${acquaintanceId}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });
 
-                if (response.error.value) {
-                    return {
-                        success: false,
-                        message: 'Failed to unlink acquaintance'
-                    };
-                }
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Failed to unlink acquaintance'
+                };
 
                 return {
                     success: true,
