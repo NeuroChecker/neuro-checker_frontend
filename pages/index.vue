@@ -1,5 +1,38 @@
 <script setup lang="ts">
-// no logic needed
+const limitReached = "1"; // testing value
+let smiley = "";
+let color = "";
+
+function getLimitReached() {
+  return limitReached; // replace with logic calculating if a limit is reached
+}
+
+function determineSmiley() {
+  switch (getLimitReached()) {
+    case "1":
+      smiley = "/media/dark-green-smiley.png";
+      color = "dark green";
+      break;
+    case "2":
+      smiley = "/media/light-green-smiley.png";
+      color = "light green";
+      break;
+    case "3":
+      smiley = "/media/yellow-smiley.png";
+      color = "yellow";
+      break;
+    case "4":
+      smiley = "/media/orange-smiley.png";
+      color = "orange";
+      break;
+    case "5":
+      smiley = "/media/red-smiley.png";
+      color = "red";
+      break;
+  }
+}
+
+determineSmiley();
 </script>
 
 <template>
@@ -10,8 +43,8 @@
 
     <main class="content">
       <img
-          src="/public/media/smiley.png"
-          alt="Smiley face"
+          :src="smiley"
+          :alt="color + ' smiley'"
           class="smiley-img"
       />
 
