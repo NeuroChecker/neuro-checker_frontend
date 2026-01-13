@@ -2,42 +2,57 @@ import type {user} from "~/types/models/user";
 
 export const useAuthStore = defineStore('authStore', {
     state: () => ({
-        user: ref <user | undefined>(undefined),
+        isLoggedIn: ref<boolean>(false),
+        user: ref<user | undefined>(undefined),
     }),
     actions: {
-        async login(email: string, password: string):Promise<Boolean> {
+        async login(email: string, password: string): Promise<Boolean> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/login', {
                     method: 'POST',
-                    body: { email, password },
+                    body: {email, password},
                     credentials: 'include',
                 });
 
                 if (response.error.value) {
                     throw new Error('Login failed');
                 }
-                await this.fetchUser();
-                return true;
 
+                await this.updateLoginStatus();
+                return true;
             } catch (error) {
                 console.error('Error during login:', error);
                 return false;
             }
         },
-        async fetchUser() {
+        async fetchUser(): Promise<user | undefined> {
+            if (this.user) return this.user;
+
+            await this.updateLoginStatus();
+            return this.user;
+        },
+        async updateLoginStatus(): Promise<boolean> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/me', {
                     method: 'GET',
                     credentials: 'include',
                 });
+
                 if (response.error.value) {
                     throw new Error('Failed to fetch user data');
                 }
+
                 this.user = response.data.value;
-            }
-            catch (error) {
+                this.isLoggedIn = true;
+
+                return true;
+            } catch (error) {
                 console.error('Error fetching user data:', error);
-                throw error;
+
+                this.isLoggedIn = false;
+                this.user = undefined;
+
+                return false;
             }
         }
     },
