@@ -9,10 +9,14 @@ const handleSubmit = async (e: Event) => {
   e.preventDefault();
 
   errorMessage.value = '';
-  const success = await authStore.login(email.value, password.value);
 
-  if (!success) {
-    errorMessage.value = 'Verkeerde inloggegevens. Probeer het opnieuw.';
+  const response = await authStore.login({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (!response.success) {
+    errorMessage.value = 'Verrkeerde inloggegevens. Probeer het opnieuw.';
     return;
   }
 

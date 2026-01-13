@@ -1,4 +1,5 @@
 import type {user} from "~/types/models/user";
+import type {LoginRequest} from "~/types/requests/LoginRequest";
 
 export const useAuthStore = defineStore('authStore', {
     state: () => ({
@@ -6,24 +7,39 @@ export const useAuthStore = defineStore('authStore', {
         user: ref<user | undefined>(undefined),
     }),
     actions: {
-        /* TODO - Use LoginRequest model*/
-        async login(email: string, password: string): Promise<boolean> {
+        async login(request: LoginRequest): Promise<{
+            success: boolean;
+            message: string | undefined;
+        }> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/login', {
                     method: 'POST',
-                    body: {email, password},
+                    body: request,
                     credentials: 'include',
                 });
 
-                if (response.error.value) {
-                    throw new Error('Login failed');
+                if (response.error.value) return {
+                    success: false,
+                    message: 'Login failed'
+                };
+
+                if ((await this.updateLoginStatus()).success) return {
+                    success: true,
+                    message: undefined
+                };
+
+                return {
+                    success: false,
+                    message: 'Failed to fetch user data after login'
                 }
 
-                await this.updateLoginStatus();
-                return true;
             } catch (error) {
                 console.error('Error during login:', error);
-                return false;
+
+                return {
+                    success: false,
+                    message: 'An unexpected error occurred'
+                };
             }
         },
         async fetchUser(cookieValue?: string): Promise<user | undefined> {
@@ -32,7 +48,10 @@ export const useAuthStore = defineStore('authStore', {
             await this.updateLoginStatus(cookieValue);
             return this.user;
         },
-        async updateLoginStatus(cookieValue?: string): Promise<boolean> {
+        async updateLoginStatus(cookieValue?: string): Promise<{
+            success: boolean;
+            message: string | undefined;
+        }> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/me', {
                     method: 'GET',
@@ -41,20 +60,32 @@ export const useAuthStore = defineStore('authStore', {
                 });
 
                 if (response.error.value) {
-                    throw new Error('Failed to fetch user data');
+                    this.isLoggedIn = false;
+                    this.user = undefined;
+
+                    return {
+                        success: false,
+                        message: 'Failed to fetch user data'
+                    }
                 }
 
                 this.user = response.data.value;
                 this.isLoggedIn = true;
 
-                return true;
+                return {
+                    success: true,
+                    message: undefined
+                };
             } catch (error) {
                 console.error('Error fetching user data:', error);
 
                 this.isLoggedIn = false;
                 this.user = undefined;
 
-                return false;
+                return {
+                    success: false,
+                    message: 'An unexpected error occurred'
+                };
             }
         }
     },
