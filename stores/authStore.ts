@@ -6,7 +6,8 @@ export const useAuthStore = defineStore('authStore', {
         user: ref<user | undefined>(undefined),
     }),
     actions: {
-        async login(email: string, password: string): Promise<Boolean> {
+        /* TODO - Use LoginRequest model*/
+        async login(email: string, password: string): Promise<boolean> {
             try {
                 const response = await useFetch<user>('http://localhost:5170/api/identity/login', {
                     method: 'POST',
