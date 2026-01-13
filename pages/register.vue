@@ -3,20 +3,29 @@ const authStore = useAuthStore();
 
 const email = ref('');
 const password = ref('');
+const confirmPassword = ref('');
+
 const errorMessage = ref('');
 
 const handleSubmit = async (e: Event) => {
   e.preventDefault();
 
   errorMessage.value = '';
-  const success = await authStore.login(email.value, password.value);
 
-  if (!success) {
-    errorMessage.value = 'Verkeerde inloggegevens. Probeer het opnieuw.';
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Wachtwoorden komen niet overeen. Probeer het opnieuw.';
     return;
   }
 
-  await useRouter().push('/');
+  // const success = await authStore.register(email.value, password.value);
+  const success = false;
+
+  if (!success) {
+    errorMessage.value = 'Registratie mislukt. Probeer het opnieuw.';
+    return;
+  }
+
+  await useRouter().push('/login');
 };
 </script>
 
@@ -31,7 +40,7 @@ const handleSubmit = async (e: Event) => {
         </p>
 
         <p class="text-gray-600">
-          Log in om verder te gaan
+          Registreer een nieuw account
         </p>
       </div>
 
@@ -50,19 +59,25 @@ const handleSubmit = async (e: Event) => {
             placeholder="wachtwoord"
             class="mt-2 p-2 border border-gray-400 rounded"
         />
+        <input
+            v-model="confirmPassword"
+            type="password"
+            placeholder="bevestig wachtwoord"
+            class="mt-2 p-2 border border-gray-400 rounded"
+        />
 
         <button
             type="submit"
             class="mt-2 px-4 py-2 bg-[#7aa2ff] text-white rounded hover:bg-[#5a82e6] transition-colors"
         >
-          Inloggen
+          Registreer
         </button>
       </form>
 
       <div>
         <p class="mt-4 text-gray-600">
-          Geen account?
-          <NuxtLink to="/register" class="text-[#7aa2ff]">Registreer hier</NuxtLink>
+          Al een account?
+          <NuxtLink to="/login" class="text-[#7aa2ff]">Log hier in</NuxtLink>
         </p>
       </div>
     </div>
