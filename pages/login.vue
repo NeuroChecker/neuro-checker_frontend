@@ -40,12 +40,14 @@ const handleSubmit = async (e: Event) => {
       <form @submit="handleSubmit" class="flex flex-col mt-4">
         <input
             v-model="email"
+            required
             type="text"
             placeholder="e-mail"
             class="mt-4 p-2 border border-gray-400 rounded"
         />
         <input
             v-model="password"
+            required
             type="password"
             placeholder="wachtwoord"
             class="mt-2 p-2 border border-gray-400 rounded"
