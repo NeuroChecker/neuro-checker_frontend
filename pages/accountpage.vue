@@ -3,16 +3,8 @@
 </script>
 
 <template>
-  <div class="page">
-    <header class="header">
-      <span class="menu">☰</span>
-      <span class="app-title">Neuro Checker</span>
-      <img
-          src="/public/media/smiley.png"
-          alt="Profile avatar"
-          class="header-avatar"
-      />
-    </header>
+  <div>
+    <Header/>
 
     <main class="content">
       <img
@@ -49,40 +41,6 @@
 /* ---------------------------
    MOBILE
 ---------------------------- */
-.page {
-  min-height: 100vh;
-  background-color: #1f1f1f;
-  color: #ffffff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-/* Header */
-.header {
-  height: 56px;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #7aa2ff;
-  color: #ffffff;
-}
-
-.menu {
-  font-size: 20px;
-}
-
-.app-title {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.header-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 /* Content */
 .content {
   padding: 32px 16px;

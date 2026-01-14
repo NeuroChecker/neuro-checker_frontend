@@ -33,30 +33,11 @@ function determineSmiley() {
 }
 
 determineSmiley();
-
-const authStore = useAuthStore();
-
-const logout = async () => {
-  await authStore.logout();
-  await useRouter().push('/login');
-};
 </script>
 
 <template>
   <div>
-    <header class="header flex items-center justify-between">
-      <div class="flex items-center">
-        <span class="home">Home</span>
-      </div>
-
-      <div v-if="authStore.isLoggedIn" class="flex items-center">
-        <span>{{ authStore.user!.email }}</span>
-
-        <button @click="logout()" class="ml-4 text-red-500">
-          Logout
-        </button>
-      </div>
-    </header>
+    <Header/>
 
     <main class="content">
       <img
