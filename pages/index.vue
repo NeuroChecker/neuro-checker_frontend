@@ -52,7 +52,7 @@ determineSmiley();
         printing.
       </p>
 
-      <a href="#" class="learn-more">Learn more</a>
+      <NuxtLink to="/analysis" class="learn-more">Learn more</NuxtLink>
     </main>
   </div>
 </template>
