@@ -1,17 +1,68 @@
 <script setup lang="ts">
-// no logic needed
+const limitReached = "1"; // testing value
+let smiley = "";
+let color = "";
+
+function getLimitReached() {
+  return limitReached; // replace with logic calculating if a limit is reached
+}
+
+function determineSmiley() {
+  switch (getLimitReached()) {
+    case "1":
+      smiley = "/media/dark-green-smiley.png";
+      color = "dark green";
+      break;
+    case "2":
+      smiley = "/media/light-green-smiley.png";
+      color = "light green";
+      break;
+    case "3":
+      smiley = "/media/yellow-smiley.png";
+      color = "yellow";
+      break;
+    case "4":
+      smiley = "/media/orange-smiley.png";
+      color = "orange";
+      break;
+    case "5":
+      smiley = "/media/red-smiley.png";
+      color = "red";
+      break;
+  }
+}
+
+determineSmiley();
+
+const authStore = useAuthStore();
+
+const logout = async () => {
+  await authStore.logout();
+  await useRouter().push('/login');
+};
 </script>
 
 <template>
   <div class="page">
-    <header class="header">
-      <span class="home">Home</span>
+
+    <header class="header flex items-center justify-between">
+      <div class="flex items-center">
+        <span class="home">Home</span>
+      </div>
+
+      <div v-if="authStore.isLoggedIn" class="flex items-center">
+        <span>{{ authStore.user!.email }}</span>
+
+        <button @click="logout()" class="ml-4 text-red-500">
+          Logout
+        </button>
+      </div>
     </header>
 
     <main class="content">
       <img
-          src="/public/media/smiley.png"
-          alt="Smiley face"
+          :src="smiley"
+          :alt="color + ' smiley'"
           class="smiley-img"
       />
 
