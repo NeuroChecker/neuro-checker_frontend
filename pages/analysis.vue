@@ -29,7 +29,7 @@ const xFormatter = (tick: number, _i?: number, _ticks?: number[]): string => {
 }
 </script>
 <template>
-  <div style="background-color: #1E1E1E; margin: 0px; padding: 0px; height: 100vh; max-width: 320px; width: 100%; overflow: hidden;">
+  <div>
     <div style=" grid: auto / auto auto; gap: 10px; padding: 5px; display: grid; justify-content: center; align-items: center; width: 100%;">
       <h1 style="grid-column: span 2; font-size: 15px; color: #87A0E4;"> Jouw Analyse </h1>
       <Card
