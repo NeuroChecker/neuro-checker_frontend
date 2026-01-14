@@ -43,8 +43,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <div class="page">
-
+  <div>
     <header class="header flex items-center justify-between">
       <div class="flex items-center">
         <span class="home">Home</span>
