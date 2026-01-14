@@ -9,7 +9,7 @@ const logout = async () => {
 
 <template>
   <header class="header">
-    <div class="w-[10%]">
+    <div class="min-w-[20%]">
       <NuxtLink to="/" class="menu">
         ☰
       </NuxtLink>
@@ -21,7 +21,7 @@ const logout = async () => {
       </NuxtLink>
     </div>
 
-    <div v-if="authStore.isLoggedIn" class="flex items-center gap-2 w-[10%] justify-end">
+    <div v-if="authStore.isLoggedIn" class="flex items-center gap-4 min-w-[20%] justify-end">
       <NuxtLink to="/accountpage">
         <div class="flex items-center gap-1">
           <img
@@ -34,7 +34,7 @@ const logout = async () => {
         </div>
       </NuxtLink>
 
-      <button @click="logout()" class="ml-4 text-white border px-2 px-2 py-1 rounded border-white">
+      <button @click="logout()" class="text-white border px-2 px-2 py-1 rounded border-white">
         Logout
       </button>
     </div>
