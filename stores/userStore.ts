@@ -17,7 +17,10 @@ export const useUserStore = defineStore('userStore', {
                     message: 'User not logged in'
                 };
 
-                const response = await useFetch('http://localhost:5170/api/personal/thresholds', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/personal/thresholds`, {
                     method: 'POST',
                     body: request,
                     credentials: 'include',
@@ -56,7 +59,10 @@ export const useUserStore = defineStore('userStore', {
                     acquaintances: undefined
                 };
 
-                const response = await useFetch<Acquaintance[]>('http://localhost:5170/api/personal/acquaintances', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch<Acquaintance[]>(`${apiUrl}/api/personal/acquaintances`, {
                     method: 'GET',
                     body: request,
                     credentials: 'include',
@@ -97,7 +103,10 @@ export const useUserStore = defineStore('userStore', {
                     message: 'User not logged in'
                 };
 
-                const response = await useFetch('http://localhost:5170/api/personal/acquaintances', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/personal/acquaintances`, {
                     method: 'PUT',
                     body: request,
                     credentials: 'include',
@@ -134,7 +143,10 @@ export const useUserStore = defineStore('userStore', {
                     message: 'User not logged in'
                 };
 
-                const response = await useFetch(`http://localhost:5170/api/personal/acquaintances/${acquaintanceId}`, {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/personal/acquaintances/${acquaintanceId}`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });

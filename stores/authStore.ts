@@ -13,7 +13,10 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch('http://localhost:5170/api/identity/login', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/identity/login`, {
                     method: 'POST',
                     body: request,
                     credentials: 'include',
@@ -49,7 +52,10 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch('http://localhost:5170/api/identity/logout', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/identity/logout`, {
                     method: 'DELETE',
                     credentials: 'include',
                 });
@@ -80,7 +86,10 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch('http://localhost:5170/api/identity/register', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch(`${apiUrl}/api/identity/register`, {
                     method: 'POST',
                     body: request,
                     credentials: 'include',
@@ -117,7 +126,10 @@ export const useAuthStore = defineStore('authStore', {
             message: string | undefined;
         }> {
             try {
-                const response = await useFetch<User>('http://localhost:5170/api/identity/me', {
+                const config = useRuntimeConfig();
+                const apiUrl = config.public.API_BASE_URL || 'http://localhost:5170';
+
+                const response = await useFetch<User>(`${apiUrl}/api/identity/me`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: cookieValue ? {'Cookie': `.AspNetCore.Identity.Application=${cookieValue}`} : {}
