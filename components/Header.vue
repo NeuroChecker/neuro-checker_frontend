@@ -26,7 +26,7 @@ const logout = async () => {
         <div class="flex items-center gap-1">
           <img
               :title="authStore.user!.email"
-              src="/public/media/smiley.png"
+              src="/media/light-green-smiley.png"
               alt="Profile avatar"
               class="header-avatar"
           />

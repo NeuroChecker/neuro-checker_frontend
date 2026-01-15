@@ -8,7 +8,7 @@
 
     <main class="content">
       <img
-          src="/public/media/smiley.png"
+          src="/media/light-green-smiley.png"
           alt="Profile picture"
           class="profile-img"
       />
